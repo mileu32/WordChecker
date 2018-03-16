@@ -49,7 +49,7 @@ public class WordChecker {
 
 			String target = line.trim();
 
-			System.out.println(target + "¸¦ °Ë»çÇÕ´Ï´Ù.");
+			System.out.println(target + "ë¥¼ ê²€ì‚¬í•©ë‹ˆë‹¤.");
 			int checker = naverDicWordCheck(query, target, bw1, bw2);
 
 			if (checker == -1) {
@@ -60,7 +60,7 @@ public class WordChecker {
 		}
 
 		if (!ifError) {
-			bw2.write("ÃàÇÏÇÕ´Ï´Ù. ¾î¶°ÇÑ ¿À·ùµµ ¹ß°ßµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+			bw2.write("ì¶•í•˜í•©ë‹ˆë‹¤. ì–´ë– í•œ ì˜¤ë¥˜ë„ ë°œê²¬ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
 		}
 
 		br.close();
@@ -100,16 +100,16 @@ public class WordChecker {
 			dicDesc = dicWordCache.select("ul.desc_lst");
 
 			if (!dicWord.text().contains(targetWord)) {
-				System.out.println("¿À·ù°¡ °ËÃâµÇ¾ú½À´Ï´Ù.\n");
+				System.out.println("ì˜¤ë¥˜ê°€ ê²€ì¶œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
 				return -1;
 			} else {
-				System.out.println("»çÀü¿¡ µîÀçµÇ¾îÀÖ´Â ´Ü¾îÀÔ´Ï´Ù.\n");
+				System.out.println("ì‚¬ì „ì— ë“±ì¬ë˜ì–´ìˆëŠ” ë‹¨ì–´ì…ë‹ˆë‹¤.\n");
 				ow.write(dicWord.text() + "\t" + dicDesc.text() + System.lineSeparator());
 			}
 
 		} catch (Exception e) {
 			// e.printStackTrace();
-			System.out.println("¿À·ù°¡ °ËÃâµÇ¾ú½À´Ï´Ù.\n");
+			System.out.println("ì˜¤ë¥˜ê°€ ê²€ì¶œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
 			return -1;
 		}
 
