@@ -18,7 +18,7 @@ public class WordChecker {
 
 	public static void main(String[] args) throws IOException {
 
-		System.out.println("WordChecker v0.1.0 (20180316 build 1)");
+		System.out.println("WordChecker v0.2.0 beta (20180316 build 2)");
 
 		BufferedReader preferences = new BufferedReader(
 				new InputStreamReader(new FileInputStream(new File("data/preferences.txt")), "UTF-8"));
@@ -56,17 +56,18 @@ public class WordChecker {
 				ifError = true;
 				bw2.write(line + System.lineSeparator());
 			}
-
-		}
-
-		if (!ifError) {
-			bw2.write("축하합니다. 어떠한 오류도 발견되지 않았습니다.");
 		}
 
 		br.close();
 		bw1.close();
 		bw2.close();
 
+		if (!ifError) {
+			System.out.println("축하합니다. 어떠한 오류도 발견되지 않았습니다.");
+			File errorFile = new File("error.txt");
+			if (errorFile.exists())
+				errorFile.delete();
+		}
 	}
 
 	public static int naverDicWordCheck(String query, String targetWord, BufferedWriter ow, BufferedWriter ew) {
