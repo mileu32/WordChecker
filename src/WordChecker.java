@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URLEncoder;
 
-import javax.swing.UIManager;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -20,13 +18,7 @@ public class WordChecker {
 
 	public static void main(String[] args) throws IOException {
 
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		new WordCheckerUI();
-		System.out.println("WordChecker v0.2.0 beta (20180318 build 3)\n");
+		System.out.println("WordChecker v0.2.0 beta (20180316 build 2)");
 
 		BufferedReader preferences = new BufferedReader(
 				new InputStreamReader(new FileInputStream(new File("data/preferences.txt")), "UTF-8"));
