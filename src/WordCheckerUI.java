@@ -20,6 +20,8 @@ import javax.swing.text.JTextComponent;
 
 public class WordCheckerUI extends JFrame implements ActionListener, FocusListener {
 
+	private static final long serialVersionUID = 1634599422314429397L;
+
 	private JPanel downloadDomainsPanel, downloadSetPanel;
 
 	private String[] downloadDomainsString = { "example.com", "기타" };
@@ -33,10 +35,6 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 
 	private JFileChooser fileChooser = new JFileChooser();
 	JFrame fileChooseWindow = new JFrame();
-
-	private String[] webtoonData;
-
-	private String accountID, accountPW;
 
 	WordCheckerUI() {
 
@@ -103,32 +101,7 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 		int targetServiece = downloadDomain.getSelectedIndex();
 
 		if (e.getSource() == downloadStartButton) {
-
-			String webtoonName, titleID, authorName, urlString;
-			boolean ifAdult, ifDownloadAll;
-			String naverID, naverPW;
-			int targetDomain, finalEpisode, downloadStart, downloadEnd;
-
-			webtoonName = downloadSetText[0].getText();
-			titleID = downloadSetText[1].getText();
-			authorName = webtoonData[2];
-
-			targetDomain = downloadDomain.getSelectedIndex();
-
-			if (webtoonData[3].equals("yes")) {
-				ifAdult = true;
-				naverID = this.accountID;
-				naverPW = this.accountPW;
-			} else {
-				ifAdult = false;
-				naverID = "";
-				naverPW = "";
-			}
-
-			finalEpisode = Integer.parseInt(webtoonData[4]);
-			urlString = webtoonData[5];
-
-			
+			ProgressUI progress = new ProgressUI();
 
 		}
 	}

@@ -26,7 +26,7 @@ public class WordChecker {
 			e.printStackTrace();
 		}
 		new WordCheckerUI();
-		System.out.println("WordChecker v0.2.0 beta (20180318 build 3)\n");
+		System.out.println("WordChecker v0.2.0 beta (20180319 build 4)\n");
 
 		BufferedReader preferences = new BufferedReader(
 				new InputStreamReader(new FileInputStream(new File("data/preferences.txt")), "UTF-8"));
