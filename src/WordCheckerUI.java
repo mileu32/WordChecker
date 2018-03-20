@@ -10,84 +10,83 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.JTextComponent;
 
 public class WordCheckerUI extends JFrame implements ActionListener, FocusListener {
 
 	private static final long serialVersionUID = 1634599422314429397L;
 
-	private JPanel downloadDomainsPanel, downloadSetPanel;
+	private JPanel targetDictsPanel, targetSetPanel;
 
-	private String[] downloadDomainsString = { "example.com", "기타" };
-	private JComboBox<String> downloadDomain;
+	private String[] targetDictString = { "example.com", "기타" };
+	private JComboBox<String> targetDict;
 
-	private JLabel downloadSetLabel[] = new JLabel[3];
-	private JTextField downloadSetText[] = new JTextField[3];
+	private JTextField targetSetText[] = new JTextField[3];
 
-	private JButton downloadStartButton;
-	private JPanel downloadProgressBarPanel;
+	private JButton targetStartButton;
+	private JPanel targetProgressBarPanel;
+
+	private File targetFile, checkedFile, errorFile;
 
 	private JFileChooser fileChooser = new JFileChooser();
 	JFrame fileChooseWindow = new JFrame();
 
 	WordCheckerUI() {
 
-		super("WordChecker v0.2.0 beta (20180318 BUILD 3)");
+		super("WordChecker v0.2.0 beta (20180320 BUILD 5)");
 
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+		targetFile = new File("검토 대상");
+		checkedFile = new File("출력 경로");
+		errorFile = new File("에러 출력 경로");
+
 		// 저장할 웹툰 호스팅 업체 설정
-		downloadDomainsPanel = new JPanel();
-		downloadDomain = new JComboBox<String>();
+		targetDictsPanel = new JPanel();
+		targetDict = new JComboBox<String>();
 
-		for (int i = 0; i < downloadDomainsString.length; i++) {
-			downloadDomain.addItem(downloadDomainsString[i]);
+		for (int i = 0; i < targetDictString.length; i++) {
+			targetDict.addItem(targetDictString[i]);
 		}
-		downloadDomainsPanel.add(downloadDomain);
+		targetDictsPanel.add(targetDict);
 
-		downloadDomainsPanel.setBorder(new TitledBorder("사용할 사전을 선택해주세요."));
-		add(downloadDomainsPanel, BorderLayout.NORTH);
+		targetDictsPanel.setBorder(new TitledBorder("사용할 사전을 선택해주세요."));
+		add(targetDictsPanel, BorderLayout.NORTH);
 
-		downloadSetPanel = new JPanel();
-		downloadSetPanel.setLayout(new GridLayout(3, 2, 5, 5));
+		targetSetPanel = new JPanel();
+		targetSetPanel.setLayout(new GridLayout(3, 1, 5, 5));
 
 		for (int i = 0; i < 3; i++) {
-			downloadSetLabel[i] = new JLabel();
-			downloadSetLabel[i].setHorizontalAlignment(SwingConstants.CENTER);
-			downloadSetText[i] = new JTextField();
-			downloadSetText[i].setHorizontalAlignment(SwingConstants.CENTER);
-			downloadSetText[i].setColumns(10);
-			downloadSetText[i].addFocusListener(this);
+			targetSetText[i] = new JTextField();
+			targetSetText[i].setHorizontalAlignment(SwingConstants.CENTER);
+			targetSetText[i].setColumns(10);
+			targetSetText[i].addFocusListener(this);
 		}
 
-		downloadSetLabel[0].setText("검토 대상");
-		downloadSetLabel[1].setText("출력 경로");
-		downloadSetLabel[2].setText("에러 출력 경로");
+		targetSetText[0].setText(targetFile.toString());
+		targetSetText[1].setText(checkedFile.toString());
+		targetSetText[2].setText(errorFile.toString());
 
-		downloadSetPanel.add(downloadSetLabel[0]);
-		downloadSetPanel.add(downloadSetText[0]);
-		downloadSetPanel.add(downloadSetLabel[1]);
-		downloadSetPanel.add(downloadSetText[1]);
-		downloadSetPanel.add(downloadSetLabel[2]);
-		downloadSetPanel.add(downloadSetText[2]);
+		targetSetPanel.add(targetSetText[0]);
+		targetSetPanel.add(targetSetText[1]);
+		targetSetPanel.add(targetSetText[2]);
 
-		downloadSetPanel.setBorder(new TitledBorder("파일 설정을 검토해주세요."));
-		add(downloadSetPanel, BorderLayout.CENTER);
+		targetSetPanel.setBorder(new TitledBorder("파일 설정을 검토해주세요."));
+		add(targetSetPanel, BorderLayout.CENTER);
 
-		downloadProgressBarPanel = new JPanel();
+		targetProgressBarPanel = new JPanel();
 
-		downloadStartButton = new JButton();
-		downloadStartButton.setText("검토 시작");
-		downloadStartButton.addActionListener(this);
+		targetStartButton = new JButton();
+		targetStartButton.setText("검토 시작");
+		targetStartButton.setEnabled(false);
+		targetStartButton.addActionListener(this);
 
-		downloadProgressBarPanel.add(downloadStartButton);
-		add(downloadProgressBarPanel, BorderLayout.SOUTH);
+		targetProgressBarPanel.add(targetStartButton);
+		add(targetProgressBarPanel, BorderLayout.SOUTH);
 
 		setVisible(true);
 		setLocation(100, 100);
@@ -98,10 +97,10 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		int targetServiece = downloadDomain.getSelectedIndex();
+		int targetServiece = targetDict.getSelectedIndex();
 
-		if (e.getSource() == downloadStartButton) {
-			ProgressUI progress = new ProgressUI();
+		if (e.getSource() == targetStartButton) {
+			new ProgressUI(targetFile.toString(), checkedFile.toString(), errorFile.toString());
 
 		}
 	}
@@ -109,20 +108,46 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 	@Override
 	public void focusGained(FocusEvent e) {
 		// TODO Auto-generated method stub
-		downloadSetPanel.requestFocusInWindow();
-		
-		JFileChooser fileChooser = new JFileChooser();
+		targetSetPanel.requestFocusInWindow();
 
-		// 파일오픈 다이얼로그 를 띄움
-		int result = fileChooser.showOpenDialog(fileChooseWindow);
+		if (e.getSource() == targetSetText[0]) {
+			// select file
+			JFileChooser fileChooser = new JFileChooser();
+			int result = fileChooser.showOpenDialog(fileChooseWindow);
+			if (result == JFileChooser.APPROVE_OPTION) {
+				// 선택한 파일의 경로 반환
+				targetFile = fileChooser.getSelectedFile();
+				checkedFile = new File(targetFile.getParent() + "\\"
+						+ targetFile.getName().substring(0, targetFile.getName().indexOf(".")) + "_checked.txt");
+				errorFile = new File(targetFile.getParent() + "\\"
+						+ targetFile.getName().substring(0, targetFile.getName().indexOf(".")) + "_error.txt");
+				targetSetText[0].setText(targetFile.toString());
+				targetSetText[1].setText(checkedFile.toString());
+				targetSetText[2].setText(errorFile.toString());
 
-		if (result == JFileChooser.APPROVE_OPTION) {
-			// 선택한 파일의 경로 반환
-			File selectedFile = fileChooser.getSelectedFile();
-			((JTextComponent) e.getSource()).setText(selectedFile.toString());
+				targetStartButton.setEnabled(true);
+			}
+
+		} else if (e.getSource() == targetSetText[1]) {
+			JFileChooser fileChooser = new JFileChooser();
+			int result = fileChooser.showOpenDialog(fileChooseWindow);
+			if (result == JFileChooser.APPROVE_OPTION) {
+				// 선택한 파일의 경로 반환
+				checkedFile = fileChooser.getSelectedFile();
+				targetSetText[1].setText(checkedFile.toString());
+			}
+
+		} else if (e.getSource() == targetSetText[2]) {
+			JFileChooser fileChooser = new JFileChooser();
+			int result = fileChooser.showOpenDialog(fileChooseWindow);
+			if (result == JFileChooser.APPROVE_OPTION) {
+				// 선택한 파일의 경로 반환
+				errorFile = fileChooser.getSelectedFile();
+				targetSetText[2].setText(errorFile.toString());
+			}
 
 		}
-		
+
 	}
 
 	@Override

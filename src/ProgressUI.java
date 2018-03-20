@@ -45,8 +45,10 @@ public class ProgressUI extends JFrame implements PropertyChangeListener {
 		}
 	}
 
-	public ProgressUI() {
+	public ProgressUI(String target, String checked, String error) {
 		super("WordChecker v0.2.0");
+
+		System.out.println(target + " : " + checked + " : " + error);
 
 		icon = new ImageIcon("data/example.png");
 		icon = new ImageIcon(icon.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
