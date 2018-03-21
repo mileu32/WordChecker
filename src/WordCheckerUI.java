@@ -37,7 +37,7 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 
 	WordCheckerUI() {
 
-		super("WordChecker v0.2.0 beta (20180320 BUILD 5)");
+		super("WordChecker v0.2.0 (20180321 BUILD 6)");
 
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +100,7 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 		int targetServiece = targetDict.getSelectedIndex();
 
 		if (e.getSource() == targetStartButton) {
-			new ProgressUI(targetFile.toString(), checkedFile.toString(), errorFile.toString());
+			new ProgressUI(targetFile.toString(), checkedFile.toString(), errorFile.toString(), "");
 
 		}
 	}
