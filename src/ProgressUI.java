@@ -79,7 +79,7 @@ public class ProgressUI extends JFrame implements PropertyChangeListener {
 
 					String target = line.trim();
 
-					System.out.println(target + "를 검사합니다.");
+					//System.out.println(target + "를 검사합니다.");
 					int checker = wordChecker(query, target, bw1, bw2);
 
 					if (checker == -1) {
@@ -93,7 +93,7 @@ public class ProgressUI extends JFrame implements PropertyChangeListener {
 				bw2.close();
 
 				if (!ifError) {
-					System.out.println("축하합니다. 어떠한 오류도 발견되지 않았습니다.");
+					//System.out.println("축하합니다. 어떠한 오류도 발견되지 않았습니다.");
 					File errorFile = new File(errorText);
 					if (errorFile.exists())
 						errorFile.delete();
@@ -113,7 +113,7 @@ public class ProgressUI extends JFrame implements PropertyChangeListener {
 	}
 
 	public ProgressUI(String target, String checked, String error, String profile) {
-		super("WordChecker v0.2.0");
+		super("WordChecker v0.3.0 beta");
 
 		targetText = target;
 		checkedText = checked;
@@ -216,16 +216,16 @@ public class ProgressUI extends JFrame implements PropertyChangeListener {
 			dicDesc = dicWordCache.select("ul.desc_lst");
 
 			if (!dicWord.text().contains(targetWord)) {
-				System.out.println("오류가 검출되었습니다.\n");
+				//System.out.println("오류가 검출되었습니다.\n");
 				return -1;
 			} else {
-				System.out.println("사전에 등재되어있는 단어입니다.\n");
+				//System.out.println("사전에 등재되어있는 단어입니다.\n");
 				ow.write(dicWord.text() + "\t" + dicDesc.text() + System.lineSeparator());
 			}
 
 		} catch (Exception e) {
 			// e.printStackTrace();
-			System.out.println("오류가 검출되었습니다.\n");
+			//System.out.println("오류가 검출되었습니다.\n");
 			return -1;
 		}
 

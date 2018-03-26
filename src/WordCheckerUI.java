@@ -37,7 +37,9 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 
 	WordCheckerUI() {
 
-		super("WordChecker v0.2.0 (20180321 BUILD 6)");
+		super("WordChecker v0.3.0 beta");
+		
+		new SplashWindow("data\\WordCheckerSplashScreen.png", 2500, this);
 
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,10 +90,10 @@ public class WordCheckerUI extends JFrame implements ActionListener, FocusListen
 		targetProgressBarPanel.add(targetStartButton);
 		add(targetProgressBarPanel, BorderLayout.SOUTH);
 
-		setVisible(true);
-		setLocation(100, 100);
 		pack();
-
+		setLocationRelativeTo(null);
+		setVisible(true);
+		
 	}
 
 	@Override

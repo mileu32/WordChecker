@@ -13,7 +13,7 @@ public class WordChecker {
 		}
 		new WordCheckerUI();
 
-		System.out.println("WordChecker v0.2.0 (20180321 BUILD 6)\n");
+		System.out.println("WordChecker v0.3.0 beta (20180327 BUILD 7)\n");
 
 	}
 
